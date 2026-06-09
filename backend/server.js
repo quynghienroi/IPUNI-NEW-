@@ -9,6 +9,7 @@ const medicationsRoutes = require('./src/modules/medications/medications.routes'
 const appointmentsRoutes = require('./src/modules/appointments/appointments.routes');
 const adviceRoutes = require('./src/modules/advice/advice.routes');
 const usersRoutes = require('./src/modules/users/users.routes');
+const scanRoutes = require('./src/modules/scan/scan.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -22,11 +23,12 @@ app.use('/api/v1/medications', medicationsRoutes);
 app.use('/api/v1/appointments', appointmentsRoutes);
 app.use('/api/v1/advice', adviceRoutes);
 app.use('/api/v1/users', usersRoutes);
+app.use('/api/v1/scan', scanRoutes);
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use(errorMiddleware);
 
 app.listen(PORT, () => {
-  console.log(`IPUNI Backend running on http://localhost:${PORT}`);
+  console.log(`DIA+ Backend running on http://localhost:${PORT}`);
 });

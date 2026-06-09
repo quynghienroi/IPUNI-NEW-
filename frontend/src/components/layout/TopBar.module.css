@@ -13,7 +13,12 @@
   padding: 0 16px;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(27,95,166,0.18);
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+:global([data-theme="gold"]) .topbar {
+  background: linear-gradient(135deg, #9A6B00 0%, #C9921A 45%, #F0C040 100%);
+  box-shadow: 0 2px 12px rgba(184,134,11,0.35);
 }
 
 .logo {
@@ -29,6 +34,7 @@
   letter-spacing: 1px;
 }
 
+.iconBtn,
 .bellBtn {
   width: 36px;
   height: 36px;
@@ -38,9 +44,12 @@
   align-items: center;
   justify-content: center;
   color: #fff;
+  border: none;
+  cursor: pointer;
   transition: background 0.15s;
 }
 
+.iconBtn:hover,
 .bellBtn:hover { background: rgba(255,255,255,0.25); }
 
 .actions {

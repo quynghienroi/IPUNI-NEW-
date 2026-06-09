@@ -46,7 +46,7 @@ export default function RegisterPage() {
     <div className={styles.page}>
       <div className={styles.logoSection}>
         <div className={styles.logoIcon}><Activity size={36} color="#fff" strokeWidth={2.5} /></div>
-        <div className={styles.logoName}>IPUNI</div>
+        <div className={styles.logoName}>DIA+</div>
         <div className={styles.tagline}>Tạo tài khoản mới<br />để bắt đầu theo dõi sức khỏe</div>
       </div>
 
@@ -117,7 +117,7 @@ export default function RegisterPage() {
       </div>
 
       <div className={styles.footer}>
-        IPUNI · Ứng dụng theo dõi sức khỏe tiểu đường
+        DIA+ · Ứng dụng theo dõi sức khỏe tiểu đường
       </div>
     </div>
   );

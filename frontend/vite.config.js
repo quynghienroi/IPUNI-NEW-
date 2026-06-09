@@ -9,8 +9,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['icons/icon-192.png', 'icons/icon-512.png'],
       manifest: {
-        name: 'IPUNI - Theo dõi tiểu đường',
-        short_name: 'IPUNI',
+        name: 'DIA+ - Theo dõi tiểu đường',
+        short_name: 'DIA+',
         description: 'Ứng dụng theo dõi sức khỏe dành cho bệnh nhân tiểu đường',
         theme_color: '#1B5FA6',
         background_color: '#F4F6F9',

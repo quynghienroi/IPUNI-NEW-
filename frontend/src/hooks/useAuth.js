@@ -1,15 +1,20 @@
 import { useEffect } from 'react';
 import useAuthStore from '../store/authStore';
+import useThemeStore from '../store/themeStore';
 import { authService } from '../services/auth.service';
 
 export function useAuth() {
-  const { user, token, isAuthenticated, setAuth, setUser, logout } = useAuthStore();
+  const { user, token, isAuthenticated, setAuth, setUser, logout: storeLogout } = useAuthStore();
+  const { applyPlanTheme, resetTheme } = useThemeStore();
 
   useEffect(() => {
     if (token && !user) {
       authService.getMe()
-        .then((res) => setUser(res.data.data))
-        .catch(() => logout());
+        .then((res) => {
+          setUser(res.data.data);
+          applyPlanTheme(res.data.data.plan);
+        })
+        .catch(() => storeLogout());
     }
   }, [token]);
 
@@ -17,6 +22,7 @@ export function useAuth() {
     const res = await authService.login(identifier, password);
     const { token, user } = res.data.data;
     setAuth(token, user);
+    applyPlanTheme(user.plan);
     return user;
   };
 
@@ -24,8 +30,20 @@ export function useAuth() {
     const res = await authService.register(cccd, phone, password);
     const { token, user } = res.data.data;
     setAuth(token, user);
+    applyPlanTheme(user.plan);
     return user;
   };
 
-  return { user, token, isAuthenticated, login, logout, register };
+  const logout = () => {
+    storeLogout();
+    resetTheme();
+  };
+
+  const updateProfile = async (data) => {
+    const res = await authService.updateProfile(data);
+    setUser(res.data.data);
+    return res.data.data;
+  };
+
+  return { user, token, isAuthenticated, login, logout, register, updateProfile };
 }

@@ -10,7 +10,7 @@ function formatDate(dateStr) {
   return `${d.getDate()}/${d.getMonth() + 1}`;
 }
 
-export default function BloodGlucoseChart({ data, type, days, onDaysChange }) {
+export default function BloodGlucoseChart({ data = [], type, days, onDaysChange }) {
   const meta = METRIC_TYPES[type] || METRIC_TYPES.fasting;
 
   const chartData = [...data]

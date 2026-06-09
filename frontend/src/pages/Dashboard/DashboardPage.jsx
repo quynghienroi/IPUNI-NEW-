@@ -5,6 +5,7 @@ import { useAuth } from '../../hooks/useAuth';
 import { useMetrics } from '../../hooks/useMetrics';
 import { useMedications } from '../../hooks/useMedications';
 import useThemeStore from '../../store/themeStore';
+import { useT } from '../../hooks/useT';
 import { MetricCard, AddMetricCard } from '../../components/metrics/MetricCard';
 import MedicationCard from '../../components/medications/MedicationCard';
 import AddMetricModal from '../../components/metrics/AddMetricModal';
@@ -15,25 +16,25 @@ import CuteCatWidget from '../../components/cute/CuteCatWidget';
 import CuteAstronautCat from '../../components/cute/CuteAstronautCat';
 import styles from './DashboardPage.module.css';
 
-function getGreeting(cute) {
+function getGreeting(cute, t) {
   const h = new Date().getHours();
   if (cute) {
-    if (h < 6) return 'Chúc ngủ ngon,';
-    if (h < 12) return 'Chào buổi sáng xinh,';
-    if (h < 18) return 'Chiều vui vẻ nha,';
-    return 'Buổi tối dễ thương,';
+    if (h < 6) return t.dashboard.greetNightCute;
+    if (h < 12) return t.dashboard.greetMorningCute;
+    if (h < 18) return t.dashboard.greetAfternoonCute;
+    return t.dashboard.greetEveningCute;
   }
-  if (h < 6) return 'Chào buổi đêm,';
-  if (h < 12) return 'Chào buổi sáng,';
-  if (h < 18) return 'Chào buổi chiều,';
-  return 'Chào buổi tối,';
+  if (h < 6) return t.dashboard.greetNight;
+  if (h < 12) return t.dashboard.greetMorning;
+  if (h < 18) return t.dashboard.greetAfternoon;
+  return t.dashboard.greetEvening;
 }
 
-function formatVNDate() {
+function formatDate(t) {
   const now = new Date();
-  const days = ['Chủ nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
   const pad = (n) => String(n).padStart(2, '0');
-  return `${days[now.getDay()]}, ${pad(now.getDate())} tháng ${pad(now.getMonth() + 1)} ${now.getFullYear()}`;
+  const dayName = t.days[now.getDay()];
+  return `${dayName}, ${t.dateFormat(pad(now.getDate()), pad(now.getMonth() + 1), now.getFullYear())}`;
 }
 
 export default function DashboardPage() {
@@ -41,6 +42,7 @@ export default function DashboardPage() {
   const { latestMetrics, fetchLatest, addMetric } = useMetrics();
   const { todayMedications, fetchToday } = useMedications();
   const { isCuteMode } = useThemeStore();
+  const t = useT();
   const [showModal, setShowModal] = useState(false);
   const [showSuccessToast, setShowSuccessToast] = useState(false);
 
@@ -67,11 +69,11 @@ export default function DashboardPage() {
         <div className={styles.greeting}>
           <div className={styles.greetingTop}>
             <div>
-              <div className={styles.greetText}>{getGreeting(isCuteMode)}</div>
+              <div className={styles.greetText}>{getGreeting(isCuteMode, t)}</div>
               <div className={styles.userName}>
                 {user?.name || '...'} {isCuteMode ? '🌸' : '👋'}
               </div>
-              <div className={styles.date}>{formatVNDate()}</div>
+              <div className={styles.date}>{formatDate(t)}</div>
             </div>
             <div className={isCuteMode ? styles.iconBtnCute : styles.iconBtn}>
               {isCuteMode ? <Star size={20} fill="currentColor" /> : <Activity size={22} />}
@@ -83,10 +85,10 @@ export default function DashboardPage() {
         <div className={styles.section}>
           <div className={styles.sectionHeader}>
             <span className={styles.sectionTitle}>
-              {isCuteMode ? '✨ Chỉ số gần nhất' : 'Chỉ số gần nhất'}
+              {isCuteMode ? t.dashboard.metricsSectionCute : t.dashboard.metricsSection}
             </span>
             <Link to="/metrics" className={styles.seeAll}>
-              {isCuteMode ? 'Xem tất cả 🔍' : 'Xem tất cả >'}
+              {isCuteMode ? t.dashboard.viewAllCute : t.dashboard.viewAll}
             </Link>
           </div>
 
@@ -109,17 +111,17 @@ export default function DashboardPage() {
               <div className={styles.cuteMedHeader}>
                 <div className={styles.cuteMedLeft}>
                   <CuteAstronautCat size="icon" />
-                  <span className={styles.medicationTitle}>Thuốc hôm nay</span>
+                  <span className={styles.medicationTitle}>{t.dashboard.todayMeds}</span>
                 </div>
-                <Link to="/medications" className={styles.medLink}>Xem đơn 💊</Link>
+                <Link to="/medications" className={styles.medLink}>{t.dashboard.viewPrescriptionCute}</Link>
               </div>
             ) : (
               <div className={styles.medicationHeader}>
                 <div className={styles.medicationTitle}>
                   <Pill size={18} color="#1B5FA6" />
-                  Thuốc hôm nay
+                  {t.dashboard.todayMeds}
                 </div>
-                <Link to="/medications" className={styles.medLink}>Xem đơn</Link>
+                <Link to="/medications" className={styles.medLink}>{t.dashboard.viewPrescription}</Link>
               </div>
             )}
 
@@ -130,7 +132,7 @@ export default function DashboardPage() {
             )}
 
             {!isCuteMode && todayMedications.length === 0 && (
-              <EmptyState icon={Pill} title="Chưa có đơn thuốc" subtitle="Bác sĩ chưa kê đơn thuốc nào." />
+              <EmptyState icon={Pill} title={t.dashboard.noMeds} subtitle={t.dashboard.noMedsSubtitle} />
             )}
 
             {todayMedications.length > 0 &&

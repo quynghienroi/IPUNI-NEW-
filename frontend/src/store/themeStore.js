@@ -1,23 +1,68 @@
 import { create } from 'zustand';
 
-const isCuteMode = () => localStorage.getItem('ipuni-theme') === 'cute';
+const THEME_KEY = 'diaplus-theme';
+const USER_THEME_KEY = 'diaplus-theme-user';
+const PRO_THEME_KEY = 'diaplus-pro-theme';
 
-const applyTheme = (cute) => {
-  document.documentElement.setAttribute('data-theme', cute ? 'cute' : 'default');
-  localStorage.setItem('ipuni-theme', cute ? 'cute' : 'default');
-};
+function getStoredTheme() {
+  return localStorage.getItem(THEME_KEY) || 'default';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme === 'default' ? '' : theme);
+  localStorage.setItem(THEME_KEY, theme);
+}
 
 const useThemeStore = create((set) => {
-  const cute = isCuteMode();
-  applyTheme(cute);
+  const theme = getStoredTheme();
+  applyTheme(theme);
 
   return {
-    isCuteMode: cute,
+    theme,
+    isCuteMode: theme === 'cute',
+    isGoldMode: theme === 'gold',
+
     toggleCuteMode: () =>
       set((state) => {
-        const next = !state.isCuteMode;
+        if (state.isGoldMode) return state; // gold overrides cute
+        const next = state.isCuteMode ? 'default' : 'cute';
         applyTheme(next);
-        return { isCuteMode: next };
+        localStorage.setItem(USER_THEME_KEY, next);
+        return { theme: next, isCuteMode: next === 'cute', isGoldMode: false };
+      }),
+
+    applyPlanTheme: (plan) =>
+      set((state) => {
+        if (plan === 'pro' || plan === 'premium') {
+          // Use previously selected Pro theme; default to gold on first login
+          const proTheme = localStorage.getItem(PRO_THEME_KEY) || 'gold';
+          if (!state.isGoldMode) {
+            localStorage.setItem(USER_THEME_KEY, state.theme);
+          }
+          applyTheme(proTheme);
+          return { theme: proTheme, isCuteMode: proTheme === 'cute', isGoldMode: proTheme === 'gold' };
+        } else {
+          localStorage.removeItem(PRO_THEME_KEY);
+          const saved = localStorage.getItem(USER_THEME_KEY) || 'default';
+          applyTheme(saved);
+          return { theme: saved, isCuteMode: saved === 'cute', isGoldMode: false };
+        }
+      }),
+
+    // Pro users explicitly select a theme — persists across reloads
+    selectTheme: (theme) =>
+      set(() => {
+        applyTheme(theme);
+        localStorage.setItem(PRO_THEME_KEY, theme);
+        return { theme, isCuteMode: theme === 'cute', isGoldMode: theme === 'gold' };
+      }),
+
+    resetTheme: () =>
+      set(() => {
+        localStorage.removeItem(PRO_THEME_KEY);
+        const saved = localStorage.getItem(USER_THEME_KEY) || 'default';
+        applyTheme(saved);
+        return { theme: saved, isCuteMode: saved === 'cute', isGoldMode: false };
       }),
   };
 });

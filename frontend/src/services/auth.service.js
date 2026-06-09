@@ -5,4 +5,5 @@ export const authService = {
   register: (cccd, phone, password) => api.post('/auth/register', { cccd, phone, password }),
   getMe: () => api.get('/auth/me'),
   logout: () => api.post('/auth/logout'),
+  updateProfile: (data) => api.put('/users/profile', data),
 };

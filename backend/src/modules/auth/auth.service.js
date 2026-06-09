@@ -20,7 +20,14 @@ async function login(identifier, password) {
   if (!valid) throw { status: 401, message: 'Thông tin đăng nhập không đúng' };
 
   const token = signToken(user);
-  return { token, user: { id: user.id, name: user.name, email: user.email, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis } };
+  return { token, user: { id: user.id, user_code: user.user_code, name: user.name, address: user.address, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis, plan: user.plan } };
+}
+
+function genUserCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let code = 'DIA';
+  for (let i = 0; i < 6; i++) code += chars[Math.floor(Math.random() * chars.length)];
+  return code;
 }
 
 async function register(cccd, phone, password) {
@@ -31,17 +38,26 @@ async function register(cccd, phone, password) {
   if (existingPhone) throw { status: 409, message: 'Số điện thoại đã được đăng ký' };
 
   const password_hash = await bcrypt.hash(password, 10);
-  const [id] = await db('users').insert({ cccd, phone, password_hash });
+  let user_code;
+  do { user_code = genUserCode(); } while (await db('users').where({ user_code }).first());
+  const [id] = await db('users').insert({ cccd, phone, password_hash, user_code });
   const user = await db('users').where({ id }).first();
 
   const token = signToken(user);
-  return { token, user: { id: user.id, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis } };
+  return { token, user: { id: user.id, user_code: user.user_code, address: user.address, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis } };
 }
 
 async function getMe(userId) {
   const user = await db('users').where({ id: userId }).first();
   if (!user) throw { status: 404, message: 'Người dùng không tồn tại' };
-  return { id: user.id, name: user.name, email: user.email, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis, created_at: user.created_at };
+  return {
+    id: user.id, user_code: user.user_code, name: user.name, email: user.email,
+    address: user.address, cccd: user.cccd, phone: user.phone,
+    date_of_birth: user.date_of_birth, blood_type: user.blood_type,
+    allergies: user.allergies, insurance_number: user.insurance_number,
+    insurance_expiry: user.insurance_expiry,
+    diagnosis: user.diagnosis, plan: user.plan, created_at: user.created_at,
+  };
 }
 
 module.exports = { login, register, getMe };

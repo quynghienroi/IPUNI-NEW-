@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Plus } from 'lucide-react';
-import { METRIC_TYPES } from '../../constants/metrics';
 import { useMetrics } from '../../hooks/useMetrics';
+import { useT } from '../../hooks/useT';
 import FilterPills from '../../components/common/FilterPills';
 import BloodGlucoseChart from '../../components/metrics/BloodGlucoseChart';
 import MetricHistoryItem from '../../components/metrics/MetricHistoryItem';
@@ -9,13 +9,14 @@ import AddMetricModal from '../../components/metrics/AddMetricModal';
 import Button from '../../components/common/Button';
 import styles from './MetricsPage.module.css';
 
-const TYPE_OPTIONS = Object.entries(METRIC_TYPES).map(([k, v]) => ({ value: k, label: v.label }));
-
 export default function MetricsPage() {
   const [activeType, setActiveType] = useState('fasting');
   const [days, setDays] = useState(7);
   const [showModal, setShowModal] = useState(false);
   const { metrics, loading, fetchMetrics, addMetric, removeMetric } = useMetrics();
+  const t = useT();
+
+  const TYPE_OPTIONS = Object.entries(t.metrics.types).map(([k, v]) => ({ value: k, label: v }));
 
   useEffect(() => {
     fetchMetrics(activeType, days);
@@ -35,11 +36,11 @@ export default function MetricsPage() {
     <div className={styles.page}>
       <div className={styles.header}>
         <div className={styles.titleBlock}>
-          <h1 className={styles.title}>Theo dõi chỉ số</h1>
-          <p className={styles.subtitle}>Nhập và xem biểu đồ chỉ số sức khỏe</p>
+          <h1 className={styles.title}>{t.metrics.title}</h1>
+          <p className={styles.subtitle}>{t.metrics.subtitle}</p>
         </div>
         <Button onClick={() => setShowModal(true)} style={{ borderRadius: 20, padding: '8px 14px', fontSize: 13 }}>
-          <Plus size={14} /> Nhập chỉ số
+          <Plus size={14} /> {t.metrics.addBtn}
         </Button>
       </div>
 
@@ -52,23 +53,18 @@ export default function MetricsPage() {
       </div>
 
       <div className={styles.historySection}>
-        <div className={styles.historyTitle}>Lịch sử gần đây</div>
-        {metrics.length === 0 ? (
-          <div className={styles.emptyHistory}>
-            Chưa có dữ liệu.<br />Nhấn "Nhập chỉ số" để bắt đầu theo dõi.
-          </div>
+        {loading ? null : metrics.length === 0 ? (
+          <p className={styles.empty}>{t.metrics.noData}</p>
         ) : (
-          metrics.map((m) => (
-            <MetricHistoryItem key={m.id} metric={m} onDelete={handleDelete} />
-          ))
+          metrics.map((m) => <MetricHistoryItem key={m.id} metric={m} onDelete={handleDelete} />)
         )}
       </div>
 
       {showModal && (
         <AddMetricModal
-          defaultType={activeType}
           onClose={() => setShowModal(false)}
           onSave={handleSave}
+          defaultType={activeType}
         />
       )}
     </div>

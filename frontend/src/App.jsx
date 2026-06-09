@@ -10,6 +10,7 @@ import MetricsPage from './pages/Metrics/MetricsPage';
 import MedicationsPage from './pages/Medications/MedicationsPage';
 import AppointmentsPage from './pages/Appointments/AppointmentsPage';
 import AdvicePage from './pages/Advice/AdvicePage';
+import ScanPrescriptionPage from './pages/ScanPrescriptionPage';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuthStore();
@@ -63,6 +64,13 @@ function AppRoutes() {
         <ProtectedRoute>
           <AppLayout>
             <AdvicePage />
+          </AppLayout>
+        </ProtectedRoute>
+      } />
+      <Route path="/scan" element={
+        <ProtectedRoute>
+          <AppLayout>
+            <ScanPrescriptionPage />
           </AppLayout>
         </ProtectedRoute>
       } />

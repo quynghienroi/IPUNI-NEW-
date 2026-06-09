@@ -1,9 +1,11 @@
-import { Activity, Bell, Sparkles } from 'lucide-react';
+import { Activity, Bell, BookOpen, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import UserMenu from './UserMenu';
 import useThemeStore from '../../store/themeStore';
 import styles from './TopBar.module.css';
 
 export default function TopBar() {
+  const navigate = useNavigate();
   const { isCuteMode } = useThemeStore();
 
   return (
@@ -13,10 +15,13 @@ export default function TopBar() {
           ? <Sparkles size={22} color="#fff" strokeWidth={2.5} />
           : <Activity size={22} color="#fff" strokeWidth={2.5} />
         }
-        <span className={styles.logoText}>IPUNI</span>
+        <span className={styles.logoText}>DIA+</span>
         {isCuteMode && <span className={styles.cuteBadge}>cute</span>}
       </div>
       <div className={styles.actions}>
+        <button className={styles.iconBtn} title="Lời khuyên" onClick={() => navigate('/advice')}>
+          <BookOpen size={20} />
+        </button>
         <button className={styles.bellBtn} title="Thông báo">
           <Bell size={20} />
         </button>

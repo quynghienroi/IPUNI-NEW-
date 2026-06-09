@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: path.join(__dirname, 'database', 'ipuni.db')
+      filename: path.join(__dirname, 'database', 'diaplus.db')
     },
     useNullAsDefault: true,
     migrations: {

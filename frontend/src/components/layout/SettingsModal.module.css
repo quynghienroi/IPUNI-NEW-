@@ -4,6 +4,39 @@
   gap: 4px;
 }
 
+.goldThemeRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, #FFF8E7, #FFF3CD);
+  border-radius: var(--radius-md);
+  border: 1.5px solid #EDD99A;
+}
+
+.goldThemeIcon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #C9921A, #F0C040);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.goldBadge {
+  margin-left: auto;
+  background: linear-gradient(90deg, #9A6B00, #C9921A);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
 .sectionLabel {
   font-size: 11px;
   font-weight: 700;

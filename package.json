@@ -1,5 +1,5 @@
 {
-  "name": "ipuni",
+  "name": "diaplus",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -15,5 +15,16 @@
   "devDependencies": {
     "concurrently": "^10.0.3",
     "cross-env": "^10.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EoEmCay/IPUNI-NEW-.git"
+  },
+  "bugs": {
+    "url": "https://github.com/EoEmCay/IPUNI-NEW-/issues"
+  },
+  "homepage": "https://github.com/EoEmCay/IPUNI-NEW-#readme",
+  "dependencies": {
+    "tesseract.js": "^7.0.0"
   }
 }

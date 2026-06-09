@@ -1,39 +1,57 @@
-import { Sparkles, Bell, Shield, HelpCircle } from 'lucide-react';
+import { Sparkles, Bell, Shield, HelpCircle, Crown } from 'lucide-react';
 import Modal from '../common/Modal';
 import useThemeStore from '../../store/themeStore';
+import { usePlan } from '../../hooks/usePlan';
+import { useT } from '../../hooks/useT';
 import styles from './SettingsModal.module.css';
 
 export default function SettingsModal({ onClose }) {
-  const { isCuteMode, toggleCuteMode } = useThemeStore();
+  const { isCuteMode, toggleCuteMode, isGoldMode } = useThemeStore();
+  const { isPro } = usePlan();
+  const t = useT();
+  const s = t.settings;
 
   return (
-    <Modal title="Cài Đặt" onClose={onClose}>
+    <Modal title={s.title} onClose={onClose}>
       <div className={styles.container}>
 
-        <p className={styles.sectionLabel}>Giao diện</p>
+        <p className={styles.sectionLabel}>{s.sectionTheme}</p>
 
-        <div className={styles.row}>
-          <div className={styles.rowLeft}>
-            <div className={styles.iconWrap} style={{ background: isCuteMode ? '#F5F0FF' : '#FEF3C7' }}>
-              <Sparkles size={18} color={isCuteMode ? '#A855F7' : '#D97706'} />
+        {isGoldMode ? (
+          <div className={styles.goldThemeRow}>
+            <div className={styles.goldThemeIcon}>
+              <Crown size={18} fill="#C9921A" color="#C9921A" />
             </div>
             <div>
-              <p className={styles.rowTitle}>Cute Mode</p>
-              <p className={styles.rowDesc}>Giao diện trẻ trung, màu pastel dễ thương</p>
+              <p className={styles.rowTitle}>{s.goldTheme}</p>
+              <p className={styles.rowDesc}>{s.goldThemeDesc}</p>
             </div>
+            <span className={styles.goldBadge}>Pro</span>
           </div>
-          <button
-            className={`${styles.toggle} ${isCuteMode ? styles.toggleOn : ''}`}
-            onClick={toggleCuteMode}
-            aria-label="Toggle Cute Mode"
-          >
-            <span className={styles.toggleThumb} />
-          </button>
-        </div>
+        ) : (
+          <div className={styles.row}>
+            <div className={styles.rowLeft}>
+              <div className={styles.iconWrap} style={{ background: isCuteMode ? '#F5F0FF' : '#FEF3C7' }}>
+                <Sparkles size={18} color={isCuteMode ? '#A855F7' : '#D97706'} />
+              </div>
+              <div>
+                <p className={styles.rowTitle}>{s.cuteMode}</p>
+                <p className={styles.rowDesc}>{s.cuteModeDesc}</p>
+              </div>
+            </div>
+            <button
+              className={`${styles.toggle} ${isCuteMode ? styles.toggleOn : ''}`}
+              onClick={toggleCuteMode}
+              aria-label="Toggle Cute Mode"
+            >
+              <span className={styles.toggleThumb} />
+            </button>
+          </div>
+        )}
 
         <div className={styles.divider} />
 
-        <p className={styles.sectionLabel}>Thông báo</p>
+        <p className={styles.sectionLabel}>{s.sectionNotify}</p>
 
         <div className={styles.row}>
           <div className={styles.rowLeft}>
@@ -41,16 +59,16 @@ export default function SettingsModal({ onClose }) {
               <Bell size={18} color="#1B5FA6" />
             </div>
             <div>
-              <p className={styles.rowTitle}>Nhắc đo đường huyết</p>
-              <p className={styles.rowDesc}>Nhắc nhở mỗi sáng lúc 7:00 và chiều 17:00</p>
+              <p className={styles.rowTitle}>{s.reminderTitle}</p>
+              <p className={styles.rowDesc}>{s.reminderDesc}</p>
             </div>
           </div>
-          <div className={styles.comingSoon}>Sắp ra mắt</div>
+          <div className={styles.comingSoon}>{s.comingSoon}</div>
         </div>
 
         <div className={styles.divider} />
 
-        <p className={styles.sectionLabel}>Khác</p>
+        <p className={styles.sectionLabel}>{s.sectionOther}</p>
 
         <div className={styles.row}>
           <div className={styles.rowLeft}>
@@ -58,11 +76,11 @@ export default function SettingsModal({ onClose }) {
               <Shield size={18} color="#16A34A" />
             </div>
             <div>
-              <p className={styles.rowTitle}>Quyền riêng tư</p>
-              <p className={styles.rowDesc}>Quản lý dữ liệu sức khỏe của bạn</p>
+              <p className={styles.rowTitle}>{s.privacy}</p>
+              <p className={styles.rowDesc}>{s.privacyDesc}</p>
             </div>
           </div>
-          <div className={styles.comingSoon}>Sắp ra mắt</div>
+          <div className={styles.comingSoon}>{s.comingSoon}</div>
         </div>
 
         <div className={styles.row}>
@@ -71,14 +89,14 @@ export default function SettingsModal({ onClose }) {
               <HelpCircle size={18} color="#6B7A8D" />
             </div>
             <div>
-              <p className={styles.rowTitle}>Hỗ trợ & Hướng dẫn</p>
-              <p className={styles.rowDesc}>Câu hỏi thường gặp, liên hệ hỗ trợ</p>
+              <p className={styles.rowTitle}>{s.support}</p>
+              <p className={styles.rowDesc}>{s.supportDesc}</p>
             </div>
           </div>
-          <div className={styles.comingSoon}>Sắp ra mắt</div>
+          <div className={styles.comingSoon}>{s.comingSoon}</div>
         </div>
 
-        <p className={styles.version}>IPUNI v1.0.0 — Chăm sóc sức khỏe thông minh</p>
+        <p className={styles.version}>{s.version}</p>
       </div>
     </Modal>
   );

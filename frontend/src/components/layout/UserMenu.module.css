@@ -32,6 +32,19 @@
   transition: background 0.3s;
 }
 
+.avatarPro {
+  border-color: #FFD700;
+  box-shadow: 0 0 0 1px rgba(255, 215, 0, 0.5);
+}
+
+.proCrown {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  color: #FFD700;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
 .menu {
   position: fixed;
   background: white;
@@ -67,6 +80,105 @@
   color: var(--color-text-secondary);
 }
 
+.upgradeItem {
+  background: linear-gradient(135deg, rgba(27,95,166,0.06) 0%, rgba(124,58,237,0.08) 100%);
+  color: #1B5FA6;
+  font-weight: 700;
+}
+
+.upgradeItem svg {
+  color: #D97706 !important;
+}
+
+.upgradeItem:hover {
+  background: linear-gradient(135deg, rgba(27,95,166,0.12) 0%, rgba(124,58,237,0.15) 100%) !important;
+}
+
+.upgradeBadge {
+  margin-left: auto;
+  background: linear-gradient(90deg, #1B5FA6, #7C3AED);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 20px;
+  letter-spacing: 0.5px;
+}
+
+.menuDivider {
+  height: 1px;
+  background: var(--color-border);
+  margin: 2px 0;
+}
+
+.langRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.langIcon {
+  color: var(--color-text-secondary);
+  flex-shrink: 0;
+}
+
+.langRowLabel {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  flex: 1;
+}
+
+.langFlags {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.langFlagBtn {
+  width: 30px;
+  height: 22px;
+  padding: 0;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.12s, border-color 0.12s;
+  overflow: hidden;
+}
+
+.langFlagBtn:hover {
+  transform: scale(1.1);
+}
+
+.langFlagActive {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+
+.langFlagImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.giaoDienItem {
+  color: #C9921A;
+}
+
+.giaoDienItem svg {
+  color: #C9921A !important;
+}
+
+.giaoDienItem:hover {
+  background: #FFF8E7 !important;
+}
+
 .menuItem.logout {
   color: var(--color-danger);
   border-top: 1px solid var(--color-border);
@@ -89,6 +201,19 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+:global([data-theme="cute"]) .upgradeItem {
+  background: linear-gradient(135deg, rgba(168,85,247,0.07) 0%, rgba(236,72,153,0.08) 100%);
+  color: #7C3AED;
+}
+
+:global([data-theme="cute"]) .upgradeItem:hover {
+  background: linear-gradient(135deg, rgba(168,85,247,0.14) 0%, rgba(236,72,153,0.14) 100%) !important;
+}
+
+:global([data-theme="cute"]) .upgradeBadge {
+  background: linear-gradient(90deg, #A855F7, #EC4899);
 }
 
 @media (max-width: 430px) {

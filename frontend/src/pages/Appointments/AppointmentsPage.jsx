@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CalendarDays, FileText } from 'lucide-react';
 import { useAppointments } from '../../hooks/useAppointments';
+import { useT } from '../../hooks/useT';
 import AppointmentCard from '../../components/appointments/AppointmentCard';
 import DoctorNoteCard from '../../components/appointments/DoctorNoteCard';
 import EmptyState from '../../components/common/EmptyState';
@@ -9,6 +10,7 @@ import styles from './AppointmentsPage.module.css';
 export default function AppointmentsPage() {
   const [activeTab, setActiveTab] = useState('appointments');
   const { appointments, doctorNotes, loading, fetchAppointments, fetchDoctorNotes } = useAppointments();
+  const t = useT();
 
   useEffect(() => {
     fetchAppointments('upcoming');
@@ -17,21 +19,21 @@ export default function AppointmentsPage() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Lịch hẹn & Hướng dẫn</h1>
-      <p className={styles.subtitle}>Lịch tái khám và chỉ dẫn từ bác sĩ</p>
+      <h1 className={styles.title}>{t.appointments.title}</h1>
+      <p className={styles.subtitle}>{t.appointments.subtitle}</p>
 
       <div className={styles.tabToggle}>
         <div className={`${styles.tab} ${activeTab === 'appointments' ? styles.active : ''}`} onClick={() => setActiveTab('appointments')}>
-          Lịch hẹn
+          {t.appointments.tabAppointments}
         </div>
         <div className={`${styles.tab} ${activeTab === 'doctor' ? styles.active : ''}`} onClick={() => setActiveTab('doctor')}>
-          Từ bác sĩ
+          {t.appointments.tabDoctor}
         </div>
       </div>
 
       {activeTab === 'appointments' && (
         appointments.length === 0 ? (
-          <EmptyState icon={CalendarDays} title="Chưa có lịch hẹn" subtitle="Bác sĩ sẽ đặt lịch tái khám cho bạn sau mỗi lần khám." />
+          <EmptyState icon={CalendarDays} title={t.appointments.noAppointments} subtitle={t.appointments.noAppointmentsSubtitle} />
         ) : (
           <div className={styles.list}>{appointments.map((a) => <AppointmentCard key={a.id} appointment={a} />)}</div>
         )
@@ -39,7 +41,7 @@ export default function AppointmentsPage() {
 
       {activeTab === 'doctor' && (
         doctorNotes.length === 0 ? (
-          <EmptyState icon={FileText} title="Chưa có chỉ dẫn" subtitle="Bác sĩ sẽ ghi chỉ dẫn cho bạn sau mỗi lần khám." />
+          <EmptyState icon={FileText} title={t.appointments.noDoctorNotes} subtitle={t.appointments.noDoctorNotesSubtitle} />
         ) : (
           <div className={styles.list}>{doctorNotes.map((n) => <DoctorNoteCard key={n.id} appointment={n} />)}</div>
         )

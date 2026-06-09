@@ -37,6 +37,11 @@
   font-size: 14px;
   opacity: 0.85;
   text-align: center;
+  white-space: pre-line;
+}
+
+.langRow {
+  margin-top: 4px;
 }
 
 .card {

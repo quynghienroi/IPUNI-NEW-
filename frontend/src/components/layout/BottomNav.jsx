@@ -1,23 +1,51 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Activity, Pill, Calendar, BookOpen } from 'lucide-react';
+import { Home, Activity, Pill, Calendar, Camera } from 'lucide-react';
+import { useT } from '../../hooks/useT';
 import styles from './BottomNav.module.css';
 
-const NAV_ITEMS = [
-  { to: '/', icon: Home, label: 'Tổng quan', exact: true },
-  { to: '/metrics', icon: Activity, label: 'Chỉ số' },
-  { to: '/medications', icon: Pill, label: 'Thuốc' },
-  { to: '/appointments', icon: Calendar, label: 'Lịch hẹn' },
-  { to: '/advice', icon: BookOpen, label: 'Lời khuyên' },
-];
-
 export default function BottomNav() {
+  const t = useT();
+
+  const LEFT_ITEMS = [
+    { to: '/', icon: Home, label: t.nav.home, exact: true },
+    { to: '/metrics', icon: Activity, label: t.nav.metrics },
+  ];
+
+  const RIGHT_ITEMS = [
+    { to: '/medications', icon: Pill, label: t.nav.medications },
+    { to: '/appointments', icon: Calendar, label: t.nav.appointments },
+  ];
+
   return (
     <nav className={styles.nav}>
-      {NAV_ITEMS.map(({ to, icon: Icon, label, exact }) => (
+      {LEFT_ITEMS.map(({ to, icon: Icon, label, exact }) => (
         <NavLink
           key={to}
           to={to}
           end={exact}
+          className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ''}`}
+        >
+          <div className={styles.iconWrap}>
+            <Icon size={20} strokeWidth={1.8} />
+          </div>
+          <span className={styles.label}>{label}</span>
+        </NavLink>
+      ))}
+
+      <NavLink
+        to="/scan"
+        className={({ isActive }) => `${styles.scanItem} ${isActive ? styles.scanActive : ''}`}
+      >
+        <div className={styles.scanIconWrap}>
+          <Camera size={26} strokeWidth={2} color="#fff" />
+        </div>
+        <span className={styles.scanLabel}>{t.nav.scan}</span>
+      </NavLink>
+
+      {RIGHT_ITEMS.map(({ to, icon: Icon, label }) => (
+        <NavLink
+          key={to}
+          to={to}
           className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ''}`}
         >
           <div className={styles.iconWrap}>
