@@ -171,6 +171,7 @@ async function analyzePrescription(imageBuffer, mimeType) {
     logger.error("[Quét đơn thuốc] Lỗi khi nhận diện chữ bằng Tesseract OCR: " + ocrError.message);
   }
 
+
   let text = '';
   
   // 1. Dùng Gemini nếu có API Key (Khuyên dùng để đạt độ chính xác 100%)

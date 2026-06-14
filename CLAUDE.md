@@ -45,7 +45,8 @@ NODE_ENV=development
 ## 3. Tài khoản mẫu
 | Email | Mật khẩu | Vai trò |
 |---|---|---|
-| khoi@example.com | 123456 | Bệnh nhân (type2_diabetes) |
+| khoi@example.com | admin | Bệnh nhân (type2_diabetes) - Demo |
+| admin@example.com | admin | Admin Pro |
 
 Đăng nhập bằng email **hoặc** CCCD. Token lưu tại `localStorage['diaplus_token']`.
 

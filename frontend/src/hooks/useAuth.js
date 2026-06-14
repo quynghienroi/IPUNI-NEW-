@@ -26,12 +26,15 @@ export function useAuth() {
     return user;
   };
 
-  const register = async (cccd, phone, password) => {
-    const res = await authService.register(cccd, phone, password);
+  const register = async (cccd, phone, password, confirmPassword) => {
+    const res = await authService.register(cccd, phone, password, confirmPassword);
     const { token, user } = res.data.data;
+    return { token, user };
+  };
+
+  const completeRegistration = (token, user) => {
     setAuth(token, user);
     applyPlanTheme(user.plan);
-    return user;
   };
 
   const logout = () => {
@@ -45,5 +48,5 @@ export function useAuth() {
     return res.data.data;
   };
 
-  return { user, token, isAuthenticated, login, logout, register, updateProfile };
+  return { user, token, isAuthenticated, login, logout, register, updateProfile, completeRegistration };
 }
