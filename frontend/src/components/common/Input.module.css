@@ -22,7 +22,11 @@
   transition: border-color 0.15s;
 }
 
-.input:focus { border-color: var(--color-primary); }
+.input:focus { 
+  border-color: #00A693; 
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 166, 147, 0.1);
+}
 
 .input::placeholder { color: #B0BAC9; }
 

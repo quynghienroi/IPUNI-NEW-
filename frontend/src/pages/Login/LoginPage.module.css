@@ -1,91 +1,187 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(160deg, #1B5FA6 0%, #1B5FA6 40%, #F4F6F9 40%);
+  background-color: #FAFAFA;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  background-color: #FAFAFA;
+  min-height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.carouselSection {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+}
+
+.textContent {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.mainTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #111827; /* Dark gray almost black */
+  margin-bottom: 12px;
+}
+
+.mainSubtitle {
+  font-size: 15px;
+  color: #6B7280; /* Gray */
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.authButton {
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 20px;
+  gap: 12px;
+  width: 100%;
+  min-height: 56px;
+  border-radius: 28px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+  padding: 8px 16px;
+  box-sizing: border-box;
+  text-align: center;
+  line-height: 1.2;
 }
 
-.logoSection {
+@media (max-width: 380px) {
+  .authButton {
+    font-size: 14px;
+    gap: 8px;
+  }
+}
+
+.authButton:active {
+  transform: scale(0.98);
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.phoneBtn {
+  background-color: #00A693; /* Green from mockup */
+  color: white;
+}
+
+.phoneBtn:hover {
+  background-color: #009282;
+}
+
+.zaloBtn, .appleBtn, .googleBtn {
+  background-color: white;
+  color: #111827;
+  border: 1px solid #E5E7EB;
+}
+
+.zaloBtn:hover, .appleBtn:hover, .googleBtn:hover {
+  background-color: #F9FAFB;
+}
+
+.fallbackLogin {
+  text-align: center;
+  margin-top: 8px;
+  width: 100%;
+}
+
+.emailBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  border-radius: 28px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  color: #00A693;
+  border: 1.5px solid #00A693;
+  padding: 8px 16px;
+  box-sizing: border-box;
+}
+
+.emailBtn:hover {
+  background-color: rgba(0, 166, 147, 0.05);
+}
+
+.emailBtn:active {
+  transform: scale(0.98);
+}
+
+.emailFormContainer {
+  background-color: white;
+  padding: 30px 24px;
+  border-radius: 20px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
+}
+
+.emailTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 40px;
-  color: #fff;
-}
-
-
-.logoName {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 2px;
-}
-
-.tagline {
-  font-size: 14px;
-  opacity: 0.85;
-  text-align: center;
-  white-space: pre-line;
-}
-
-.langRow {
-  margin-top: 4px;
-}
-
-.card {
-  width: 100%;
-  max-width: 390px;
-  background: #fff;
-  border-radius: 20px;
-  padding: 28px 24px 32px;
-  box-shadow: 0 8px 40px rgba(27,95,166,0.15);
-}
-
-.title {
-  font-size: 22px;
-  font-weight: 800;
-  color: var(--color-text-primary);
-  margin-bottom: 4px;
-}
-
-.subtitle {
-  font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-bottom: 28px;
+  gap: 16px;
 }
 
 .errorMsg {
   background: #FEE2E2;
   color: #DC2626;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 16px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .registerLink {
   text-align: center;
   font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-top: 20px;
+  color: #6B7280;
+  margin-top: 16px;
 }
 
 .link {
-  color: #1B5FA6;
+  color: #00A693;
   font-weight: 600;
   text-decoration: none;
 }
 
 .link:hover {
   text-decoration: underline;
-}
-
-.footer {
-  text-align: center;
-  font-size: 12px;
-  color: #94A3B8;
-  margin-top: 20px;
 }

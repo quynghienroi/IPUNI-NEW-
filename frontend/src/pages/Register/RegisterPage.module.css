@@ -1,97 +1,100 @@
 .page {
   min-height: 100vh;
-  background: linear-gradient(160deg, #1B5FA6 0%, #1B5FA6 40%, #F4F6F9 40%);
+  background-color: #FAFAFA;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 24px 20px;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  background-color: #FAFAFA;
+  min-height: 100vh;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 .logoSection {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 32px;
-  color: #fff;
-}
-
-.logoIcon {
-  width: 72px;
-  height: 72px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logoName {
-  font-size: 28px;
-  font-weight: 900;
-  letter-spacing: 2px;
+  margin-top: 20px;
+  margin-bottom: 24px;
 }
 
 .tagline {
-  font-size: 14px;
-  opacity: 0.85;
+  font-size: 15px;
+  color: #6B7280;
   text-align: center;
+  margin-top: 12px;
+  line-height: 1.5;
 }
 
 .card {
-  width: 100%;
-  max-width: 390px;
-  background: #fff;
+  background-color: white;
+  padding: 30px 24px;
   border-radius: 20px;
-  padding: 28px 24px 32px;
-  box-shadow: 0 8px 40px rgba(27,95,166,0.15);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  width: 100%;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 800;
-  color: var(--color-text-primary);
-  margin-bottom: 4px;
+  color: #111827;
+  margin-bottom: 8px;
+  text-align: center;
 }
 
 .subtitle {
   font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-bottom: 20px;
+  color: #6B7280;
+  margin-bottom: 24px;
+  text-align: center;
 }
 
 .errorMsg {
   background: #FEE2E2;
   color: #DC2626;
-  padding: 10px 14px;
+  padding: 12px 16px;
   border-radius: 8px;
-  font-size: 13px;
-  margin-bottom: 16px;
+  font-size: 14px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .field {
-  margin-bottom: 4px;
+  display: flex;
+  flex-direction: column;
 }
 
 .fieldError {
   display: block;
   font-size: 12px;
   color: #DC2626;
-  margin-top: -10px;
-  margin-bottom: 8px;
+  margin-top: -6px;
   padding-left: 2px;
 }
 
 .loginLink {
   text-align: center;
   font-size: 14px;
-  color: var(--color-text-secondary);
-  margin-top: 20px;
+  color: #6B7280;
+  margin-top: 24px;
 }
 
 .link {
-  color: #1B5FA6;
+  color: #00A693;
   font-weight: 600;
   text-decoration: none;
 }
@@ -103,6 +106,7 @@
 .footer {
   text-align: center;
   font-size: 12px;
-  color: #94A3B8;
-  margin-top: 20px;
+  color: #9CA3AF;
+  margin-top: 32px;
+  margin-bottom: 20px;
 }
