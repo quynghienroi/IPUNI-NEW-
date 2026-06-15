@@ -37,4 +37,16 @@ function logout(req, res) {
   sendSuccess(res, null, 'Đăng xuất thành công');
 }
 
-module.exports = { login, register, getMe, logout };
+async function googleMock(req, res, next) {
+  try {
+    const { email } = req.body;
+    if (!email) throw { status: 400, message: 'Vui lòng cung cấp email' };
+    const result = await authService.googleMock(email);
+    sendSuccess(res, result, 'Đăng nhập Google thành công');
+  } catch (err) {
+    if (err.status) return sendError(res, err.message, err.status);
+    next(err);
+  }
+}
+
+module.exports = { login, register, getMe, logout, googleMock };

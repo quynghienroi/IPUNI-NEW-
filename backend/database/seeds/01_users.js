@@ -4,10 +4,10 @@ exports.seed = async function(knex) {
   await knex('users').del();
 
   const [hashAdmin, hashFree, hashPro, hashAdminPro] = await Promise.all([
-    bcrypt.hash('123456', 10),
+    bcrypt.hash('admin', 10),
     bcrypt.hash('admin001', 10),
     bcrypt.hash('admin002', 10),
-    bcrypt.hash('admin@123', 10),
+    bcrypt.hash('admin', 10),
   ]);
 
   await knex('users').insert([

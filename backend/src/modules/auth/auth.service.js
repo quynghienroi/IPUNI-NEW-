@@ -60,4 +60,27 @@ async function getMe(userId) {
   };
 }
 
-module.exports = { login, register, getMe };
+async function googleMock(email) {
+  let user = await db('users').where({ email }).first();
+  if (!user) {
+    let user_code;
+    do { user_code = genUserCode(); } while (await db('users').where({ user_code }).first());
+    
+    // Tạo user mới với mật khẩu mặc định (vì đăng nhập Google không cần pass)
+    const password_hash = await bcrypt.hash('google_oauth_mock', 10);
+    const [id] = await db('users').insert({ 
+      email, 
+      name: email.split('@')[0], // Lấy phần đầu email làm tên
+      password_hash, 
+      user_code,
+      cccd: 'GG' + Math.floor(Math.random() * 1000000000), // Mock CCCD
+      phone: '09' + Math.floor(Math.random() * 100000000)  // Mock Phone
+    });
+    user = await db('users').where({ id }).first();
+  }
+
+  const token = signToken(user);
+  return { token, user: { id: user.id, user_code: user.user_code, name: user.name, address: user.address, email: user.email, cccd: user.cccd, phone: user.phone, diagnosis: user.diagnosis, plan: user.plan } };
+}
+
+module.exports = { login, register, getMe, googleMock };

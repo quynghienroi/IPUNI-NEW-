@@ -252,7 +252,7 @@ NODE_ENV=development
 
 ### Test Account
 - **Email:** khoi@example.com
-- **Password:** 123456
+- **Password:** admin
 - **Diagnosis:** type2_diabetes
 
 ---
