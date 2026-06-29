@@ -36,7 +36,22 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.use(errorMiddleware);
 
-const server = app.listen(PORT, () => {
-  logger.info(`[Hệ thống] Server DIA+ đang khởi động và chạy thành công trên cổng: ${PORT}`);
-});
-server.timeout = 300000;
+const db = require('./src/config/database');
+
+async function startServer() {
+  try {
+    await db.migrate.latest();
+    logger.info('[Hệ thống] Đã chạy migrations thành công');
+    await db.seed.run();
+    logger.info('[Hệ thống] Đã chạy seeds thành công');
+  } catch (err) {
+    logger.error(`[Hệ thống] Lỗi khi chạy db init: ${err.message}`);
+  }
+
+  const server = app.listen(PORT, () => {
+    logger.info(`[Hệ thống] Server DIA+ đang khởi động và chạy thành công trên cổng: ${PORT}`);
+  });
+  server.timeout = 300000;
+}
+
+startServer();
