@@ -4,7 +4,7 @@
   "type": "commonjs",
   "scripts": {
     "dev": "node --watch-path=./src --watch-path=./server.js server.js",
-    "start": "node server.js",
+    "start": "knex migrate:latest && knex seed:run && node server.js",
     "migrate": "knex migrate:latest",
     "migrate:rollback": "knex migrate:rollback",
     "seed": "knex seed:run"

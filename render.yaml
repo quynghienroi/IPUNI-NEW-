@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: diaplus-backend
+    env: node
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: JWT_SECRET
+        value: "my_super_secret_jwt_key_for_demo_only_123456"
+      - key: GEMINI_API_KEY
+        value: ""
