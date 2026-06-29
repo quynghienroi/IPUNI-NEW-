@@ -23,9 +23,9 @@ export const DEFAULT_TTS_TEXTS = {
   [ALERT_TYPES.MED_NOON]: "Chào bạn, đã đến giờ uống thuốc buổi trưa rồi.",
   [ALERT_TYPES.MED_EVENING]: "Chào bạn, đã đến giờ uống thuốc buổi chiều.",
   [ALERT_TYPES.MED_NIGHT]: "Chào bạn, đã đến giờ uống thuốc buổi tối.",
-  [ALERT_TYPES.SUGAR_HIGH]: "Cảnh báo, đường huyết của bạn đang tăng sát ngưỡng nguy hiểm. Hãy uống ngay một cốc nước lọc lớn, ngừng ăn đồ ngọt và theo dõi sát sao. Nhờ người nhà hỗ trợ nếu thấy mệt.",
-  [ALERT_TYPES.SUGAR_LOW]: "Cảnh báo, đường huyết của bạn đang quá thấp! Hãy uống ngay nước đường hoặc ăn kẹo ngọt. Nghỉ ngơi tại chỗ và báo ngay cho người thân.",
-  [ALERT_TYPES.BP_LOW]: "Cảnh báo, huyết áp của bạn đang bị tụt thấp. Xin hãy giữ bình tĩnh, nằm nghỉ ngơi hoặc ngồi tại chỗ, không đứng dậy đột ngột. Hãy gọi ngay cho người nhà."
+  [ALERT_TYPES.SUGAR_HIGH]: "Chào bạn, hãy uống ngay một cốc nước lọc lớn và tạm ngưng ăn đồ ngọt nhé. Hiện tại chỉ số đường huyết đang hơi cao một chút. Hãy nghỉ ngơi thư giãn và theo dõi thêm.",
+  [ALERT_TYPES.SUGAR_LOW]: "Chào bạn, hãy uống ngay nửa ly nước đường, nước trái cây hoặc ăn một vài viên kẹo ngọt nhé. Hiện tại chỉ số đường huyết đang hơi thấp. Bạn hãy nghỉ ngơi tại chỗ và báo cho người nhà biết.",
+  [ALERT_TYPES.BP_LOW]: "Chào bạn, hãy từ từ nằm xuống hoặc ngồi nghỉ tại chỗ nhé, tuyệt đối không đứng dậy đột ngột. Hiện tại chỉ số huyết áp đang hơi thấp. Bạn cứ hít thở sâu, giữ bình tĩnh và nhờ người gọi cho người thân."
 };
 
 export const voiceAlertService = {
