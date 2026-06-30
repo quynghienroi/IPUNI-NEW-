@@ -45,12 +45,8 @@ export default function DemoCountdown() {
     return () => clearInterval(interval);
   }, [user, logout]);
 
-  if (!user) {
-    return <div className={styles.demoCountdown}><span>⏳ Chờ User...</span></div>;
-  }
-  
-  if (!user.is_demo) {
-    return <div className={styles.demoCountdown} style={{background: '#666'}}><span>⏳ Không phải Demo</span></div>;
+  if (!user || !user.is_demo) {
+    return null;
   }
 
   if (timeLeft === null) {
