@@ -19,7 +19,16 @@ async function login(identifier, password) {
   if (!valid) throw { status: 401, message: 'Thông tin đăng nhập không đúng' };
 
   const token = signToken(user);
-  return { token, user: { id: user.id, user_code: user.user_code, name: user.name, address: user.address, email: user.email, phone: user.phone, diagnosis: user.diagnosis, plan: user.plan } };
+  const is_demo = user.email && user.email.startsWith('demo_');
+  return { 
+    token, 
+    user: { 
+      id: user.id, user_code: user.user_code, name: user.name, 
+      address: user.address, email: user.email, phone: user.phone, 
+      diagnosis: user.diagnosis, plan: user.plan,
+      is_demo, created_at: is_demo ? user.created_at : undefined 
+    } 
+  };
 }
 
 function genUserCode() {
@@ -71,6 +80,7 @@ async function getMe(userId) {
     allergies: user.allergies, insurance_number: user.insurance_number,
     insurance_expiry: user.insurance_expiry,
     diagnosis: user.diagnosis, plan: user.plan, created_at: user.created_at,
+    is_demo: user.email && user.email.startsWith('demo_')
   };
 }
 
@@ -153,7 +163,11 @@ async function demoLogin() {
   const token = signToken(user);
   return {
     token,
-    user: { id: user.id, user_code: user.user_code, name: user.name, email: user.email, phone: user.phone, diagnosis: user.diagnosis, plan: user.plan },
+    user: { 
+      id: user.id, user_code: user.user_code, name: user.name, 
+      email: user.email, phone: user.phone, diagnosis: user.diagnosis, 
+      plan: user.plan, is_demo: true, created_at: user.created_at 
+    },
   };
 }
 

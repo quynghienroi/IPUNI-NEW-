@@ -137,9 +137,16 @@ export default function DashboardPage() {
               <EmptyState icon={Pill} title={t.dashboard.noMeds} subtitle={t.dashboard.noMedsSubtitle} />
             )}
 
-            {todayMedications.length > 0 &&
-              todayMedications.slice(0, 2).map((m) => <MedicationCard key={m.id} medication={m} />)
-            }
+            {todayMedications.length > 0 && (
+              <>
+                {todayMedications.slice(0, 2).map((m) => <MedicationCard key={m.id} medication={m} />)}
+                {todayMedications.length > 2 && (
+                  <div style={{ textAlign: 'center', fontSize: '14px', color: 'var(--text-secondary)', marginTop: '8px' }}>
+                    {isCuteMode ? `Và ${todayMedications.length - 2} loại thuốc khác đang chờ bạn uống 🐾` : `Còn ${todayMedications.length - 2} loại thuốc khác chưa uống`}
+                  </div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>

@@ -9,8 +9,8 @@ const LANG_FLAGS = [
   { code: 'en', emoji: '🇬🇧', label: 'English' },
   { code: 'lo', emoji: '🇱🇦', label: 'ພາສາລາວ' },
 ];
+import { useNavigate } from 'react-router-dom';
 import UserProfileModal from './UserProfileModal';
-import SettingsModal from './SettingsModal';
 import GiaoDienModal from './GiaoDienModal';
 import styles from './UserMenu.module.css';
 
@@ -18,9 +18,9 @@ export default function UserMenu() {
   const { user, logout } = useAuth();
   const t = useT();
   const { lang, setLang } = useLangStore();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
-  const [showSettings, setShowSettings] = useState(false);
   const [showGiaoDien, setShowGiaoDien] = useState(false);
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
@@ -49,7 +49,6 @@ export default function UserMenu() {
 
   const closeAllModals = () => {
     setShowProfile(false);
-    setShowSettings(false);
     setShowGiaoDien(false);
   };
 
@@ -61,8 +60,8 @@ export default function UserMenu() {
 
   const handleSettings = () => {
     closeAllModals();
-    setShowSettings(true);
     setIsOpen(false);
+    navigate('/settings');
   };
 
   const handleGiaoDien = () => {
@@ -72,7 +71,7 @@ export default function UserMenu() {
   };
 
   const getInitials = (name) => {
-    return name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U';
+    return name?.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || 'U';
   };
 
   return (
@@ -103,7 +102,7 @@ export default function UserMenu() {
                   <button
                     key={code}
                     className={`${styles.langFlagBtn} ${lang === code ? styles.langFlagActive : ''}`}
-                    onClick={() => setLang(code)}
+                    onClick={() => { setLang(code); setIsOpen(false); }}
                     title={label}
                     style={{ fontSize: 16 }}
                   >
@@ -130,10 +129,6 @@ export default function UserMenu() {
 
       {showProfile && (
         <UserProfileModal onClose={() => setShowProfile(false)} />
-      )}
-
-      {showSettings && (
-        <SettingsModal onClose={() => setShowSettings(false)} />
       )}
 
       {showGiaoDien && (

@@ -6,6 +6,7 @@ import MedicationReminderToast from '../common/MedicationReminderToast';
 import useThemeStore from '../../store/themeStore';
 import { useNotifications } from '../../hooks/useNotifications';
 import Logo from '../common/Logo';
+import DemoCountdown from '../common/DemoCountdown';
 import styles from './TopBar.module.css';
 
 export default function TopBar() {
@@ -21,6 +22,9 @@ export default function TopBar() {
           {isCuteMode && <Sparkles size={14} color="#fff" strokeWidth={2.5} />}
           {isCuteMode && <span className={styles.cuteBadge}>cute</span>}
         </div>
+        
+        <DemoCountdown />
+
         <div className={styles.actions}>
           <button className={styles.iconBtn} title="Lời khuyên" onClick={() => navigate('/advice')}>
             <BookOpen size={20} />

@@ -32,16 +32,13 @@ export default function MedicationCard({ medication }) {
         </button>
       </div>
 
-      <select
+      <button
         className={styles.statusSelect}
-        value={status}
-        onChange={(e) => setMedicationStatus(medication.id, e.target.value)}
-        style={{ background: s.bg, color: s.color, borderColor: s.border }}
+        onClick={() => setMedicationStatus(medication.id, status === 'taken' ? 'pending' : 'taken')}
+        style={{ background: s.bg, color: s.color, borderColor: s.border, cursor: 'pointer' }}
       >
-        <option value="pending">Chưa uống</option>
-        <option value="taken">Đã uống</option>
-        <option value="late">Quá giờ uống</option>
-      </select>
+        {status === 'taken' ? 'Đã uống' : status === 'late' ? 'Quá giờ' : 'Chưa uống'}
+      </button>
 
       {showDetail && (
         <MedicationDetailModal medication={medication} onClose={() => setShowDetail(false)} />

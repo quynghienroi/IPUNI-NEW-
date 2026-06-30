@@ -16,11 +16,8 @@ module.exports = {
     }
   },
   production: {
-    client: 'sqlite3',
-    connection: {
-      filename: path.join(__dirname, 'database', 'diaplus.db')
-    },
-    useNullAsDefault: true,
+    client: 'pg',
+    connection: process.env.DATABASE_URL,
     migrations: {
       directory: path.join(__dirname, 'database', 'migrations')
     },

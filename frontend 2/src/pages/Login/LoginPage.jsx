@@ -211,13 +211,13 @@ export default function LoginPage() {
 
             <form onSubmit={handleSubmit} className={styles.form} noValidate>
               <div className={styles.fieldWrap}>
-                <label className={styles.fieldLabel}>Email</label>
+                <label className={styles.fieldLabel}>Email / CCCD</label>
                 <div className={styles.inputBox}>
                   <span className={styles.inputIcon}><UserSVG /></span>
                   <input
                     className={styles.inputField}
-                    type="email"
-                    placeholder="email@example.com"
+                    type="text"
+                    placeholder="Nhập email hoặc số CCCD"
                     value={identifier}
                     onChange={(e) => setIdentifier(e.target.value)}
                     autoComplete="email"

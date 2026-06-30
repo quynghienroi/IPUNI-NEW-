@@ -21,6 +21,7 @@ export default function UserProfileModal({ onClose }) {
     name: user?.name || '',
     phone: user?.phone || '',
     address: user?.address || '',
+    cccd: user?.cccd || '',
     date_of_birth: user?.date_of_birth || '',
     blood_type: user?.blood_type || '',
     allergies: user?.allergies || '',
@@ -48,6 +49,7 @@ export default function UserProfileModal({ onClose }) {
       name: user?.name || '',
       phone: user?.phone || '',
       address: user?.address || '',
+      cccd: user?.cccd || '',
       date_of_birth: user?.date_of_birth || '',
       blood_type: user?.blood_type || '',
       allergies: user?.allergies || '',
@@ -120,6 +122,9 @@ export default function UserProfileModal({ onClose }) {
               </Field>
               <Field label="Địa Chỉ">
                 <input className={styles.input} value={form.address} onChange={set('address')} placeholder="123 Đường ABC, Quận 1, TP.HCM" />
+              </Field>
+              <Field label="CCCD/CMT">
+                <input className={styles.input} value={form.cccd} onChange={set('cccd')} placeholder="12 số CCCD" maxLength={12} />
               </Field>
               <Field label="Ngày Sinh">
                 <input className={styles.input} type="date" value={form.date_of_birth} onChange={set('date_of_birth')} />

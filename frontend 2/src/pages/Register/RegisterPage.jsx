@@ -30,6 +30,7 @@ export default function RegisterPage() {
     name: '',
     email: '',
     phone: '',
+    cccd: '',
     password: '',
     confirmPassword: '',
   });
@@ -73,15 +74,10 @@ export default function RegisterPage() {
     setLoading(true);
     try {
       // Gửi OTP trước, hiển thị modal chọn kênh
-      await authService.sendOtp(form.email, form.password);
+      await authService.sendOtp(form.email);
       setShowOtp(true);
     } catch (err) {
-      // Nếu backend OTP chưa cấu hình, vẫn mở modal để UX đầy đủ
-      if (err?.response?.status === 500 || !err?.response) {
-        setShowOtp(true);
-      } else {
-        setServerError(err?.response?.data?.message || 'Đăng ký thất bại. Vui lòng thử lại.');
-      }
+      setServerError(err?.response?.data?.message || 'Đăng ký thất bại. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
@@ -162,6 +158,20 @@ export default function RegisterPage() {
                 />
                 {errors.name && <span className={styles.fieldErr}>{errors.name}</span>}
               </div>
+
+              <div className={styles.fieldWrap}>
+                <label className={styles.fieldLabel}>
+                  Số CCCD/CMND <span className={styles.optional}>(tuỳ chọn)</span>
+                </label>
+                <input
+                  className={`${styles.input} ${errors.cccd ? styles.inputError : ''}`}
+                  type="text"
+                  placeholder="Nhập 12 số CCCD"
+                  value={form.cccd}
+                  onChange={set('cccd')}
+                  maxLength={12}
+                />
+              </div>
             </div>
 
             {/* ── Thông tin tài khoản ── */}
@@ -175,7 +185,7 @@ export default function RegisterPage() {
                 <label className={styles.fieldLabel}>Email <span className={styles.required}>*</span></label>
                 <input
                   className={`${styles.input} ${errors.email ? styles.inputError : ''}`}
-                  type="email"
+                  type="text"
                   inputMode="email"
                   placeholder="email@example.com"
                   value={form.email}

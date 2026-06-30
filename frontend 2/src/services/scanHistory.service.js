@@ -1,6 +1,13 @@
 import localforage from 'localforage';
 
-const HISTORY_KEY = 'dia_plus_scan_history';
+import useAuthStore from '../store/authStore';
+
+const BASE_HISTORY_KEY = 'dia_plus_scan_history';
+
+function getHistoryKey() {
+  const userId = useAuthStore.getState().user?.id || 'guest';
+  return `${BASE_HISTORY_KEY}_${userId}`;
+}
 
 // Configure localforage to use IndexedDB
 localforage.config({
@@ -16,7 +23,8 @@ export const scanHistoryService = {
    */
   async saveScan(scanData, imageBase64) {
     try {
-      const history = (await localforage.getItem(HISTORY_KEY)) || [];
+      const historyKey = getHistoryKey();
+      const history = (await localforage.getItem(historyKey)) || [];
       const newScan = {
         id: Date.now().toString(),
         date: new Date().toISOString(),
@@ -32,7 +40,7 @@ export const scanHistoryService = {
         history.length = 50;
       }
       
-      await localforage.setItem(HISTORY_KEY, history);
+      await localforage.setItem(historyKey, history);
       return newScan;
     } catch (error) {
       console.error('Error saving scan history:', error);
@@ -46,7 +54,8 @@ export const scanHistoryService = {
    */
   async getHistory() {
     try {
-      return (await localforage.getItem(HISTORY_KEY)) || [];
+      const historyKey = getHistoryKey();
+      return (await localforage.getItem(historyKey)) || [];
     } catch (error) {
       console.error('Error getting scan history:', error);
       return [];
@@ -75,7 +84,8 @@ export const scanHistoryService = {
     try {
       let history = await this.getHistory();
       history = history.filter(scan => scan.id !== id);
-      await localforage.setItem(HISTORY_KEY, history);
+      const historyKey = getHistoryKey();
+      await localforage.setItem(historyKey, history);
       return true;
     } catch (error) {
       console.error('Error deleting scan:', error);
@@ -88,7 +98,8 @@ export const scanHistoryService = {
    */
   async clearHistory() {
     try {
-      await localforage.removeItem(HISTORY_KEY);
+      const historyKey = getHistoryKey();
+      await localforage.removeItem(historyKey);
       return true;
     } catch (error) {
       console.error('Error clearing scan history:', error);

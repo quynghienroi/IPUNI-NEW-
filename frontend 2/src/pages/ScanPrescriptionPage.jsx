@@ -90,7 +90,9 @@ export default function ScanPrescriptionPage() {
         })
       );
       
-      await Promise.all(promises);
+      const results = await Promise.allSettled(promises);
+      const successCount = results.filter(r => r.status === 'fulfilled').length;
+      const failCount = results.length - successCount;
       
       // Save doctor notes and visit info as a completed appointment if present
       if (result.doctorNotes || result.doctorName) {
@@ -107,7 +109,11 @@ export default function ScanPrescriptionPage() {
       }
 
       setIsAllSaved(true);
-      showToast(`Đã thêm ${result.medications.length} loại thuốc thành công!`, 'success');
+      if (failCount === 0) {
+        showToast(`Đã thêm thành công ${successCount} loại thuốc!`, 'success');
+      } else {
+        showToast(`Lưu ${successCount} thành công, ${failCount} thất bại.`, 'error');
+      }
       fetchMedications();
 
       // Check if user has voice alerts configured
@@ -115,8 +121,9 @@ export default function ScanPrescriptionPage() {
       if (!hasVoice) {
         setShowVoicePrompt(true);
       }
-    } catch {
-      showToast('Có lỗi xảy ra khi lưu thuốc', 'error');
+    } catch (err) {
+      console.error(err);
+      showToast('Có lỗi xảy ra khi xử lý', 'error');
     } finally {
       setIsSavingAll(false);
     }

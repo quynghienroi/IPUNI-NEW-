@@ -2,6 +2,8 @@ const svc = require('./scan.service');
 const { sendSuccess, sendError } = require('../../utils/response.helper');
 const { findMedicationInDatabase } = require('./scan.service');
 
+const fs = require('fs');
+
 async function analyzePrescription(req, res, next) {
   try {
     req.setTimeout(300000);
@@ -10,11 +12,18 @@ async function analyzePrescription(req, res, next) {
 
     const user = req.user;
 
-    const result = await svc.analyzePrescription(req.file.buffer, req.file.mimetype);
+    const fileBuffer = fs.readFileSync(req.file.path);
+
+    const result = await svc.analyzePrescription(fileBuffer, req.file.mimetype);
+
+    if (fs.existsSync(req.file.path)) fs.unlinkSync(req.file.path);
 
     sendSuccess(res, result, 'Phân tích đơn thuốc thành công');
   } catch (err) {
     console.error('[Scan Controller] Error:', err.message);
+    if (req.file && req.file.path && fs.existsSync(req.file.path)) {
+      fs.unlinkSync(req.file.path);
+    }
     // IMPORTANT: Never return 401 from scan endpoint — external AI API errors
     // (Gemini/Anthropic) may have status 401 (invalid API key), but this should
     // NOT cause the frontend to think the user's JWT is invalid and redirect to login.
