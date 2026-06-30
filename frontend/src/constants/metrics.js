@@ -21,7 +21,6 @@ export const METRIC_TYPES = {
     normalMax: 5.5,
     prediabetesMin: 5.6,
     prediabetesMax: 6.9,
-    prediabetesMax: 6.9,
     dangerMin: 7.0
   },
   glucose_postmeal: {
@@ -78,7 +77,7 @@ export const METRIC_TYPES = {
     prediabetesMin: 2.0
   },
   blood_pressure: {
-    label: 'Huyết áp tâm thu',
+    label: 'Huyết áp',
     unit: 'mmHg',
     category: 'blood_pressure',
     min: 40,

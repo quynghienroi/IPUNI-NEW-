@@ -9,18 +9,13 @@ export default function StatisticsCard({ statistics, estimatedHbA1c, period, typ
     return null;
   }
 
-  // Tiêu đề dựa trên loại chỉ số
-  const getTitle = () => {
-    if (type === 'blood_pressure') return 'Thống kê Huyết áp';
-    if (type === 'glucose_fasting') return 'Thống kê Glucose (Đói)';
-    if (type === 'glucose_postmeal') return 'Thống kê Glucose (Sau ăn)';
-    return 'Thống kê Chỉ số';
-  };
+  const typeLabel = t.metrics?.types?.[type] || type;
+  const getTitle = () => `${t.metrics?.statisticsTitle || 'Thống kê'} ${typeLabel}`;
 
   return (
     <div className={styles.card}>
       <div className={styles.header}>
-        <h3 className={styles.title}>{getTitle()} ({period})</h3>
+        <h3 className={styles.title}>{getTitle()} (90 ngày)</h3>
         <Activity size={16} className={styles.icon} />
       </div>
 

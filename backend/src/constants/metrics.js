@@ -24,6 +24,7 @@ const THRESHOLDS = {
   glucose_fasting: {
     unit: 'mmol/L',
     category: 'glucose',
+    lowMax: 3.9,
     normalMax: 5.5,
     prediabetesMin: 5.6,
     prediabetesMax: 6.9,
@@ -31,14 +32,36 @@ const THRESHOLDS = {
     diagnosticCutoff: 7.0
   },
 
-  glucose_tolerance: {
+  glucose_postmeal: {
     unit: 'mmol/L',
     category: 'glucose',
+    lowMax: 3.9,
     normalMax: 7.7,
     prediabetesMin: 7.8,
     prediabetesMax: 11.0,
     dangerMin: 11.1,
     diagnosticCutoff: 11.1
+  },
+
+  glucose_tolerance: {
+    unit: 'mmol/L',
+    category: 'glucose',
+    lowMax: 3.9,
+    normalMax: 7.7,
+    prediabetesMin: 7.8,
+    prediabetesMax: 11.0,
+    dangerMin: 11.1,
+    diagnosticCutoff: 11.1
+  },
+
+  blood_pressure: {
+    unit: 'mmHg',
+    category: 'blood_pressure',
+    lowMax: 90,      // systolic < 90 = thấp
+    normalMax: 120,
+    prediabetesMin: 120,
+    prediabetesMax: 139,
+    dangerMin: 140
   },
 
   hba1c: {

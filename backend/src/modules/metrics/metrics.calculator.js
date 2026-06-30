@@ -46,9 +46,9 @@ class MetricsCalculator {
   }
 
   /**
-   * Estimate HbA1c from average glucose (EAGA Formula - ADA Validated)
-   * HbA1c (%) = (0.0915 × Avg_Glucose_mmol/L) + 2.15
-   * Accuracy: ±15-20% (biological variation)
+   * Estimate HbA1c from average glucose (ADAG Formula - ADA 2008)
+   * eA1C (%) = (avg_glucose_mg_dL + 46.7) / 28.7
+   * Reference: Nathan et al., Diabetes Care 2008
    *
    * @param {number} avgGlucoseMmolL - Average glucose in mmol/L
    * @returns {number|null} - Estimated HbA1c percentage
@@ -56,13 +56,13 @@ class MetricsCalculator {
   static estimateHbA1c(avgGlucoseMmolL) {
     if (!avgGlucoseMmolL || avgGlucoseMmolL <= 0) return null;
 
-    const estimated = (0.0915 * avgGlucoseMmolL) + 2.15;
+    const avgMgDl = avgGlucoseMmolL * 18.0182;
+    const estimated = (avgMgDl + 46.7) / 28.7;
 
-    // Clamp to reasonable range
     if (estimated < 4.0) return 4.0;
     if (estimated > 15.0) return 15.0;
 
-    return Math.round(estimated * 100) / 100; // 2 decimal places
+    return Math.round(estimated * 10) / 10; // 1 decimal place
   }
 
   /**

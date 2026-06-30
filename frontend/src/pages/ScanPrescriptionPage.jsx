@@ -25,6 +25,7 @@ export default function ScanPrescriptionPage() {
   const [isSavingAll, setIsSavingAll] = useState(false);
   const [isAllSaved, setIsAllSaved] = useState(false);
   const [expandedIndex, setExpandedIndex] = useState(null);
+  const [showVoicePrompt, setShowVoicePrompt] = useState(false);
 
 
   const handleImageScan = useCallback((file) => {
@@ -112,11 +113,7 @@ export default function ScanPrescriptionPage() {
       // Check if user has voice alerts configured
       const hasVoice = await voiceAlertService.hasAnyCustomVoice();
       if (!hasVoice) {
-        setTimeout(() => {
-          if (window.confirm("Bạn chưa thiết lập tính năng nhắc nhở bằng Giọng nói người nhà. Bạn có muốn cài đặt ngay bây giờ không?")) {
-            navigate('/settings');
-          }
-        }, 500);
+        setShowVoicePrompt(true);
       }
     } catch {
       showToast('Có lỗi xảy ra khi lưu thuốc', 'error');
@@ -338,7 +335,6 @@ export default function ScanPrescriptionPage() {
                     className={isAllSaved ? styles.savedBtn : styles.addBtn}
                     onClick={handleSaveAll}
                     disabled={isAllSaved || isSavingAll}
-                    style={{ marginTop: '16px', width: '100%' }}
                   >
                     {isSavingAll ? 'Đang lưu...' : isAllSaved ? (
                       <><CheckCircle size={15} /> Đã lưu toàn bộ vào sổ tay</>
@@ -346,6 +342,23 @@ export default function ScanPrescriptionPage() {
                       `Thêm tất cả ${result.medications.length} thuốc vào sổ tay`
                     )}
                   </button>
+
+                  {showVoicePrompt && (
+                    <div className={styles.voicePromptBanner}>
+                      <div className={styles.voicePromptText}>
+                        <span>🔔</span>
+                        <p>Bạn chưa cài giọng nhắc uống thuốc. Thiết lập ngay để không bỏ lỡ thuốc!</p>
+                      </div>
+                      <div className={styles.voicePromptActions}>
+                        <button className={styles.voicePromptGo} onClick={() => navigate('/settings')}>
+                          Cài đặt
+                        </button>
+                        <button className={styles.voicePromptDismiss} onClick={() => setShowVoicePrompt(false)}>
+                          Để sau
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               )}
 
