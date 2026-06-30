@@ -14,24 +14,22 @@ export default function OnboardingTour() {
 
     const isDemoUser = user.is_demo || (user.email && user.email.startsWith('demo_'));
     const forceTour = localStorage.getItem('diaplus_force_tour');
+    const hasSeenTour = localStorage.getItem('diaplus_has_seen_tour');
     
-    // First, check if we need to force the tour (user chose it on landing page)
-    if (forceTour || (isDemoUser && !localStorage.getItem('diaplus_has_seen_tour'))) {
+    // Check if we need to force the tour (user chose it on landing page or first time demo)
+    if (forceTour || (isDemoUser && !hasSeenTour)) {
+      // Don't set storage until we ACTUALLY run it, to survive Strict Mode unmounts
       const timer = setTimeout(() => {
         setRunTour(true);
+        localStorage.removeItem('diaplus_force_tour');
+        localStorage.setItem('diaplus_has_seen_tour', 'true');
       }, 500);
-      
-      // Cleanup flag so it doesn't run again, but also mark has_seen_tour
-      localStorage.removeItem('diaplus_force_tour');
-      localStorage.setItem('diaplus_has_seen_tour', 'true');
       
       return () => clearTimeout(timer);
     }
 
-    // If we didn't force the tour, check if they've seen the choice modal
-    const hasSeenTour = localStorage.getItem('diaplus_has_seen_tour');
-    if (!hasSeenTour) {
-      // For normal users who haven't seen the tour, show choice
+    // For normal users who haven't seen the tour, show choice
+    if (!isDemoUser && !hasSeenTour) {
       const timer = setTimeout(() => {
         setShowChoice(true);
       }, 1000);
