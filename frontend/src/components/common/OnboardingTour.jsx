@@ -161,13 +161,32 @@ export default function OnboardingTour() {
       target: '.tour-step-8',
       placement: 'top',
       content: (
-        <div style={{ textAlign: 'left', lineHeight: '1.6' }}>
+        <div style={{ textAlign: 'left', lineHeight: '1.6', maxHeight: '60vh', overflowY: 'auto', paddingRight: '10px' }}>
           <p style={{ fontWeight: 'bold', marginBottom: '8px' }}>Trong Cài đặt giọng nói, bạn có thể:</p>
+          
+          <p style={{ fontWeight: 'bold', marginTop: '12px', marginBottom: '4px' }}>a) Ghi âm giọng nói:</p>
           <ul style={{ paddingLeft: '20px', margin: 0 }}>
-            <li><strong>Ghi âm giọng nói:</strong> Nhấn nút microphone để thu âm giọng nói người thân.</li>
-            <li><strong>Phát lại nhắc nhở:</strong> Khi đến giờ uống thuốc, nghe lời nhắc bằng giọng nói thật.</li>
-            <li><strong>Cá nhân hóa:</strong> Thay vì giọng máy, bạn sẽ nghe giọng nói người thân mình nhắc nhở uống thuốc!</li>
-            <li><strong>Cảnh báo khẩn cấp:</strong> Cài đặt cảnh báo khi chỉ số tăng/giảm nguy hiểm.</li>
+            <li>Bạn (hoặc người thân) có thể nhấn nút microphone để thu âm giọng nói của mình</li>
+            <li>Sau khi ghi xong, nút play sẽ xuất hiện để bạn kiểm tra</li>
+            <li><strong>Lưu ý:</strong> Hiện tại những âm thanh đã ghi được nhưng chưa thể phát lại, tính năng phát âm sẽ được cập nhật trong phiên bản tiếp theo</li>
+          </ul>
+
+          <p style={{ fontWeight: 'bold', marginTop: '12px', marginBottom: '4px' }}>b) Phát lại nhắc nhở:</p>
+          <ul style={{ paddingLeft: '20px', margin: 0 }}>
+            <li>Khi đến giờ uống thuốc, bạn có thể nhấn nút play để nghe nhắc nhở</li>
+            <li>Nút dừng sẽ xuất hiện để bạn có thể dừng phát lại bất cứ lúc nào</li>
+          </ul>
+
+          <p style={{ fontWeight: 'bold', marginTop: '12px', marginBottom: '4px' }}>c) Cá nhân hóa nhắc nhở:</p>
+          <ul style={{ paddingLeft: '20px', margin: 0 }}>
+            <li>Thay vì giọng máy, con cái/vợ chồng/ông bà sẽ nghe giọng nói thực của người thân mình nhắc nhở uống thuốc</li>
+            <li><strong>Lưu ý về giọng nói:</strong> App hiện đang sử dụng giọng nói Tiếng Anh đọc văn bản Tiếng Việt. Để có trải nghiệm tốt nhất, hãy chọn giọng nói Việt trong cài đặt hệ thống điện thoại của bạn hoặc chờ cập nhật sắp tới khi app hỗ trợ giọng nói Việt đọc Tiếng Việt tự nhiên hơn</li>
+          </ul>
+
+          <p style={{ fontWeight: 'bold', marginTop: '12px', marginBottom: '4px' }}>d) Cảnh báo sức khỏe khẩn cấp:</p>
+          <ul style={{ paddingLeft: '20px', margin: 0 }}>
+            <li>Cài đặt cảnh báo tăng/giảm huyết áp</li>
+            <li>Cài đặt cảnh báo tụt huyết áp khẩn cấp để bạn phản ứng kịp thời</li>
           </ul>
         </div>
       ),
