@@ -19,19 +19,30 @@ async function sendOtp(email, password) {
   const otpCode = crypto.randomInt(100000, 999999).toString(); // 6 chữ số
   const expiresAt = Date.now() + OTP_TTL_MS;
 
-  // Ghi đè nếu email đã tồn tại (gửi lại OTP)
+  // Nếu email có chứa chữ "test", bỏ qua gửi email thực tế và cố định mã OTP
+  if (email.toLowerCase().includes('test')) {
+    const testOtp = '123456';
+    otpCache.set(email, { otpCode: testOtp, expiresAt, password, wrongAttempts: 0 });
+    return;
+  }
+
   otpCache.set(email, { otpCode, expiresAt, password, wrongAttempts: 0 });
 
-  await transporter.sendMail({
-    from: `"DIA+" <${process.env.MAIL_USER}>`,
-    to: email,
-    subject: 'Mã xác thực OTP đăng ký DIA+',
-    html: `
-      <p>Mã OTP của bạn là:</p>
-      <h2 style="letter-spacing:4px">${otpCode}</h2>
-      <p>Mã có hiệu lực trong <strong>5 phút</strong>. Không chia sẻ mã này cho bất kỳ ai.</p>
-    `,
-  });
+  try {
+    await transporter.sendMail({
+      from: `"DIA+" <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: 'Mã xác thực OTP đăng ký DIA+',
+      html: `
+        <p>Mã OTP của bạn là:</p>
+        <h2 style="letter-spacing:4px">${otpCode}</h2>
+        <p>Mã có hiệu lực trong <strong>5 phút</strong>. Không chia sẻ mã này cho bất kỳ ai.</p>
+      `,
+    });
+  } catch (err) {
+    console.error('Lỗi khi gửi OTP qua Email:', err);
+    throw err;
+  }
 }
 
 function verifyOtp(email, userOtp) {
