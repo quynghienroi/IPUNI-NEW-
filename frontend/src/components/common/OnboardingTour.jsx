@@ -1,31 +1,44 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Joyride, STATUS } from 'react-joyride';
 import Modal from './Modal';
+import useAuthStore from '../../store/authStore';
 
 export default function OnboardingTour() {
   const [showChoice, setShowChoice] = useState(false);
   const [runTour, setRunTour] = useState(false);
+  const user = useAuthStore(state => state.user);
+  const effectRan = useRef(false);
 
   useEffect(() => {
+    // Prevent double execution in React StrictMode
+    if (effectRan.current) return;
+    effectRan.current = true;
+
     const forceTour = localStorage.getItem('diaplus_force_tour');
-    if (forceTour) {
-      setTimeout(() => {
+    
+    // First, check if we need to force the tour (user chose it on landing page)
+    if (forceTour || (user && user.is_demo && !localStorage.getItem('diaplus_has_seen_tour'))) {
+      const timer = setTimeout(() => {
         setRunTour(true);
       }, 500);
+      
+      // Cleanup flag so it doesn't run again, but also mark has_seen_tour
       localStorage.removeItem('diaplus_force_tour');
       localStorage.setItem('diaplus_has_seen_tour', 'true');
-      return;
+      
+      return () => clearTimeout(timer);
     }
 
+    // If we didn't force the tour, check if they've seen the choice modal
     const hasSeenTour = localStorage.getItem('diaplus_has_seen_tour');
     if (!hasSeenTour) {
-      // Small delay to allow the app to render fully first
+      // For normal users who haven't seen the tour, show choice
       const timer = setTimeout(() => {
         setShowChoice(true);
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, []);
+  }, [user]);
 
   const handleChoice = (wantTour) => {
     setShowChoice(false);
