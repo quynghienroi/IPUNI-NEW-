@@ -165,7 +165,26 @@ export default function LoginPage() {
               <span>Đăng nhập bằng Email / Mật khẩu</span>
             </button>
 
+            <div className={styles.divider}>
+              <div className={styles.dividerLine} />
+              <span className={styles.dividerText}>hoặc</span>
+              <div className={styles.dividerLine} />
+            </div>
 
+            <button
+              className={`${styles.authBtn} ${styles.demoBtn}`}
+              onClick={handleDemoLogin}
+              disabled={demoLoading}
+            >
+              {demoLoading ? (
+                <span className={styles.demoSpinner} />
+              ) : (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+              )}
+              <span>{demoLoading ? 'Đang vào demo...' : 'Sử Dụng Demo'}</span>
+            </button>
 
             <p className={styles.registerRow}>
               Chưa có tài khoản?{' '}
