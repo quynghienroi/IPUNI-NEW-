@@ -5,7 +5,8 @@
   transform: translateX(-50%);
   width: 100%;
   max-width: 430px;
-  height: var(--color-topbar-height);
+  height: calc(var(--color-topbar-height) + var(--safe-top));
+  padding-top: var(--safe-top);
   background: var(--color-primary);
   display: flex;
   align-items: center;

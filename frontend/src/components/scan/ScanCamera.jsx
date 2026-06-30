@@ -3,6 +3,7 @@ import { Camera, Upload, ImagePlus } from 'lucide-react';
 import styles from './ScanCamera.module.css';
 
 export default function ScanCamera({ onImageScan }) {
+  const fileInputRef = useRef(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -84,16 +85,13 @@ export default function ScanCamera({ onImageScan }) {
               <Camera size={24} />
               Chụp
             </button>
-            <label className={styles.uploadBtnSmall} style={{ cursor: 'pointer' }}>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className={styles.uploadBtnSmall}
+            >
               <Upload size={20} />
               Thư viện
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
-                style={{ display: 'none' }}
-              />
-            </label>
+            </button>
           </div>
         </div>
       )}
@@ -107,16 +105,13 @@ export default function ScanCamera({ onImageScan }) {
             </div>
             <h3>Quét Đơn Thuốc</h3>
             <p>Chọn ảnh đơn thuốc từ thư viện để AI tự động nhận diện</p>
-            <label className={styles.uploadBtn} style={{ cursor: 'pointer' }}>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className={styles.uploadBtn}
+            >
               <ImagePlus size={20} />
               Chọn ảnh
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileSelect}
-                style={{ display: 'none' }}
-              />
-            </label>
+            </button>
             {cameraFailed && (
               <span className={styles.cameraNote}>
                 Camera không khả dụng — hãy chọn ảnh từ thư viện
@@ -126,6 +121,13 @@ export default function ScanCamera({ onImageScan }) {
         </div>
       )}
 
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        onChange={handleFileSelect}
+        style={{ display: 'none' }}
+      />
     </div>
   );
 }
