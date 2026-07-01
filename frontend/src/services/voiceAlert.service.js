@@ -20,6 +20,14 @@ export const DEFAULT_TTS_TEXTS = {
   [ALERT_TYPES.SUGAR_LOW]: "Chào bạn, hãy uống ngay nửa ly nước đường, nước trái cây hoặc ăn một vài viên kẹo ngọt nhé. Hiện tại chỉ số đường huyết đang hơi thấp. Bạn hãy nghỉ ngơi tại chỗ và báo cho người nhà biết."
 };
 
+// Kích hoạt nạp voice sớm cho các trình duyệt Android (load bất đồng bộ)
+if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+  window.speechSynthesis.getVoices(); // Gọi lần đầu để kích hoạt trigger
+}
+
 export const voiceAlertService = {
   currentAudio: null,
   
@@ -124,21 +132,36 @@ export const voiceAlertService = {
           text += ` Các thuốc cần uống là: ${medsToTake.join(', ')}.`;
         }
         
-        const utterance = new SpeechSynthesisUtterance(text);
+        // Cần chuyển toàn bộ chữ về in thường. 
+        // Lỗi phổ biến trên Android: Google TTS sẽ "đánh vần" từng chữ cái nếu từ đó viết HOA toàn bộ (VD: PARACETAMOL -> P-A-R...)
+        const spokenText = text.toLowerCase();
+        
+        const utterance = new SpeechSynthesisUtterance(spokenText);
         if (onEndedCallback) {
           utterance.onend = onEndedCallback;
           utterance.onerror = onEndedCallback;
         }
+        // Force language regardless of what voice is chosen
         utterance.lang = 'vi-VN';
         
         // Try to explicitly select a Vietnamese voice (Google TTS or system default vi-VN)
-        const voices = window.speechSynthesis.getVoices();
+        let voices = window.speechSynthesis.getVoices();
+        
+        // Cứu cánh cho Android nếu getVoices() vẫn rỗng:
+        if (voices.length === 0) {
+          // Thử lấy lại lần nữa
+          voices = window.speechSynthesis.getVoices();
+        }
+
         let viVoice = voices.find(v => v.name === 'Google Tiếng Việt' || v.lang === 'vi-VN' || v.lang === 'vi_VN');
         if (!viVoice) {
           viVoice = voices.find(v => v.lang.includes('vi') || v.name.toLowerCase().includes('viet'));
         }
+        
         if (viVoice) {
           utterance.voice = viVoice;
+          // Đảm bảo lang khớp với voice để không bị xung đột trên một số máy Android
+          utterance.lang = viVoice.lang; 
         }
 
         utterance.rate = 1.0;
