@@ -82,8 +82,8 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Metrics section ── */}
-        <div className={`${styles.section} tour-step-2`}>
-          <div className={styles.sectionHeader}>
+        <div className={styles.section}>
+          <div className={`${styles.sectionHeader} tour-step-2`}>
             <span className={styles.sectionTitle}>
               {isCuteMode ? t.dashboard.metricsSectionCute : t.dashboard.metricsSection}
             </span>
@@ -107,10 +107,10 @@ export default function DashboardPage() {
         </div>
 
         {/* ── Medication section ── */}
-        <div className={`${styles.section} tour-step-3`}>
+        <div className={styles.section}>
           <div className={isCuteMode ? styles.medicationCardCute : styles.medicationCard}>
             {isCuteMode ? (
-              <div className={styles.cuteMedHeader}>
+              <div className={`${styles.cuteMedHeader} tour-step-3`}>
                 <div className={styles.cuteMedLeft}>
                   <CuteAstronautCat size="icon" />
                   <span className={styles.medicationTitle}>{t.dashboard.todayMeds}</span>
@@ -118,7 +118,7 @@ export default function DashboardPage() {
                 <Link to="/medications" className={styles.medLink}>{t.dashboard.viewPrescriptionCute}</Link>
               </div>
             ) : (
-              <div className={styles.medicationHeader}>
+              <div className={`${styles.medicationHeader} tour-step-3`}>
                 <div className={styles.medicationTitle}>
                   <Pill size={18} color="#1B5FA6" />
                   {t.dashboard.todayMeds}

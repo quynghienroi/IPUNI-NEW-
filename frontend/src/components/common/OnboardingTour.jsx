@@ -61,7 +61,7 @@ export default function OnboardingTour() {
       popover: {
         title: 'Chỉ số sức khỏe',
         description: 'Đây là vùng theo dõi chỉ số sức khỏe. Nơi này hiển thị những lần đo gần nhất mà bạn đã lưu lại như Glucose và Huyết áp.',
-        side: 'top',
+        side: 'bottom',
         align: 'start'
       },
       route: '/dashboard'
@@ -71,7 +71,7 @@ export default function OnboardingTour() {
       popover: {
         title: 'Thuốc hôm nay',
         description: 'Phần này giúp bạn xem danh sách thuốc cần uống trong ngày và đánh dấu Đã uống hoặc Chưa uống để theo dõi.',
-        side: 'top',
+        side: 'bottom',
         align: 'start'
       },
       route: '/dashboard'
