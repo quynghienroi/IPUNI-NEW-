@@ -24,12 +24,6 @@ const ALERT_CONFIG = [
     title: 'Cảnh báo đường huyết GIẢM',
     desc: 'Phát khi đường huyết quá thấp',
     icon: <Activity size={18} />
-  },
-  {
-    id: ALERT_TYPES.BP_LOW,
-    title: 'Cảnh báo tụt huyết áp',
-    desc: 'Phát khi huyết áp thấp, nhắc nhở bình tĩnh',
-    icon: <HeartPulse size={18} />
   }
 ];
 

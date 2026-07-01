@@ -39,11 +39,6 @@ export default function MetricsPage() {
           status === 'danger' ? ALERT_TYPES.SUGAR_HIGH : ALERT_TYPES.SUGAR_LOW
         );
       }
-    } else if (data.measurement_type === 'blood_pressure') {
-      if (status === 'low') {
-        // Low blood pressure
-        voiceAlertService.playAlert(ALERT_TYPES.BP_LOW);
-      }
     }
   };
 
