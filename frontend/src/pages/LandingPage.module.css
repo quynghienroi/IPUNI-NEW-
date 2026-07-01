@@ -71,6 +71,7 @@
 }
 
 .title {
+  font-family: var(--font-body, sans-serif);
   font-size: 40px;
   line-height: 1.2;
   font-weight: 800;
