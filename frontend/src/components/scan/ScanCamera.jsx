@@ -4,6 +4,7 @@ import styles from './ScanCamera.module.css';
 
 export default function ScanCamera({ onImageScan }) {
   const fileInputRef = useRef(null);
+  const cameraInputRef = useRef(null);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [cameraReady, setCameraReady] = useState(false);
@@ -105,16 +106,27 @@ export default function ScanCamera({ onImageScan }) {
             </div>
             <h3>Quét Đơn Thuốc</h3>
             <p>Chọn ảnh đơn thuốc từ thư viện để AI tự động nhận diện</p>
-            <button
-              onClick={() => fileInputRef.current?.click()}
-              className={styles.uploadBtn}
-            >
-              <ImagePlus size={20} />
-              Chọn ảnh
-            </button>
+            <div style={{ display: 'flex', gap: '12px', width: '100%', maxWidth: '300px' }}>
+              <button
+                onClick={() => cameraInputRef.current?.click()}
+                className={styles.uploadBtn}
+                style={{ flex: 1, padding: '12px 0', justifyContent: 'center' }}
+              >
+                <Camera size={20} />
+                Chụp ảnh
+              </button>
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className={styles.uploadBtn}
+                style={{ flex: 1, padding: '12px 0', justifyContent: 'center', backgroundColor: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border)' }}
+              >
+                <Upload size={20} />
+                Thư viện
+              </button>
+            </div>
             {cameraFailed && (
               <span className={styles.cameraNote}>
-                Camera không khả dụng — hãy chọn ảnh từ thư viện
+                Camera web bị lỗi — hãy thử dùng camera hệ thống
               </span>
             )}
           </div>
@@ -125,6 +137,14 @@ export default function ScanCamera({ onImageScan }) {
         ref={fileInputRef}
         type="file"
         accept="image/*"
+        onChange={handleFileSelect}
+        style={{ display: 'none' }}
+      />
+      <input
+        ref={cameraInputRef}
+        type="file"
+        accept="image/*"
+        capture="environment"
         onChange={handleFileSelect}
         style={{ display: 'none' }}
       />
