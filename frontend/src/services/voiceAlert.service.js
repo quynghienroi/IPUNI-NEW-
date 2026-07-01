@@ -23,6 +23,20 @@ export const DEFAULT_TTS_TEXTS = {
 };
 
 export const voiceAlertService = {
+  currentAudio: null,
+  
+  /**
+   * Dừng âm thanh đang phát
+   */
+  stopAlert() {
+    if (this.currentAudio) {
+      this.currentAudio.pause();
+      this.currentAudio.currentTime = 0;
+      this.currentAudio = null;
+    }
+    window.speechSynthesis.cancel();
+  },
+
   /**
    * Lưu đoạn ghi âm (blob) cho một loại cảnh báo
    */
@@ -85,29 +99,38 @@ export const voiceAlertService = {
   /**
    * Phát một âm thanh cảnh báo (Custom Voice hoặc Google TTS)
    */
-  async playAlert(alertType, medsToTake = []) {
+  async playAlert(alertType, medsToTake = [], onEndedCallback = null) {
     try {
+      this.stopAlert();
+      
       const data = await this.getAllSettings();
       const setting = data[alertType];
 
       if (setting && setting.useCustomVoice && setting.audioBase64) {
         // Phát custom voice
-        const audio = new Audio(setting.audioBase64);
-        await audio.play();
+        this.currentAudio = new Audio(setting.audioBase64);
+        if (onEndedCallback) {
+          this.currentAudio.onended = onEndedCallback;
+        }
+        await this.currentAudio.play();
       } else {
         // Phát Google TTS
         let text = DEFAULT_TTS_TEXTS[alertType];
-        if (!text) return;
+        if (!text) {
+          if (onEndedCallback) onEndedCallback();
+          return;
+        }
 
         // Nếu là nhắc thuốc và có danh sách thuốc
         if (alertType.startsWith('med_') && medsToTake.length > 0) {
           text += ` Các thuốc cần uống là: ${medsToTake.join(', ')}.`;
         }
-
-        // Xóa các lời đọc đang dở
-        window.speechSynthesis.cancel();
         
         const utterance = new SpeechSynthesisUtterance(text);
+        if (onEndedCallback) {
+          utterance.onend = onEndedCallback;
+          utterance.onerror = onEndedCallback;
+        }
         utterance.lang = 'vi-VN';
         
         // Try to explicitly select a Vietnamese voice (Google TTS or system default vi-VN)

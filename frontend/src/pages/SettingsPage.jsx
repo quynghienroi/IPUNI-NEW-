@@ -41,11 +41,15 @@ export default function SettingsPage() {
 
   const [settings, setSettings] = useState({});
   const [recordingId, setRecordingId] = useState(null);
+  const [playingId, setPlayingId] = useState(null);
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
 
   useEffect(() => {
     loadSettings();
+    return () => {
+      voiceAlertService.stopAlert();
+    };
   }, []);
 
   const loadSettings = async () => {
@@ -90,8 +94,17 @@ export default function SettingsPage() {
     setRecordingId(null);
   };
 
-  const playVoice = (alertType) => {
-    voiceAlertService.playAlert(alertType);
+  const handlePlayVoice = (alertType) => {
+    if (playingId === alertType) {
+      voiceAlertService.stopAlert();
+      setPlayingId(null);
+    } else {
+      voiceAlertService.stopAlert();
+      setPlayingId(alertType);
+      voiceAlertService.playAlert(alertType, [], () => {
+        setPlayingId(null);
+      });
+    }
   };
 
   const deleteVoice = async (alertType) => {
@@ -155,8 +168,8 @@ export default function SettingsPage() {
                     </button>
                   )}
                   
-                  <button className={`${styles.iconBtn} ${styles.playBtn}`} onClick={() => playVoice(item.id)}>
-                    <Play size={20} fill="currentColor" />
+                  <button className={`${styles.iconBtn} ${styles.playBtn}`} onClick={() => handlePlayVoice(item.id)}>
+                    {playingId === item.id ? <Square size={20} fill="currentColor" /> : <Play size={20} fill="currentColor" />}
                   </button>
                 </div>
                 
