@@ -10,7 +10,7 @@ export default function Logo({ size = 'md', variant = 'onDark', className = '' }
   return (
     <div className={`${styles.wrap} ${styles[size]} ${className}`}>
       <span className={`${styles.text} ${variant === 'onLight' ? styles.onLight : styles.onDark}`}>
-        DIA+
+        Diaplus
       </span>
     </div>
   );
