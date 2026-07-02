@@ -206,7 +206,7 @@ export default function SettingsPage() {
           </div>
         </div>
         <div className={styles.scaleRow} style={{ display: 'flex', gap: '8px' }}>
-          {[1, 1.25, 1.5, 2].map((lvl) => (
+          {[1, 1.1, 1.2, 1.3].map((lvl) => (
             <button
               key={lvl}
               onClick={() => setFontScale(lvl)}
